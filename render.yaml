@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: dashboard-allpe
+    runtime: node
+    plan: free
+    buildCommand: ""
+    startCommand: node server.js
+    envVars:
+      - key: GOOGLE_SHEETS_API_KEY
+        sync: false
+      - key: GOOGLE_SHEETS_ID
+        sync: false
+      - key: GOOGLE_SHEETS_NAME
+        sync: false
+      - key: GOOGLE_SHEETS_RANGE
+        sync: false
+      - key: META_ACCESS_TOKEN
+        sync: false
+      - key: META_AD_ACCOUNT_ID
+        sync: false
