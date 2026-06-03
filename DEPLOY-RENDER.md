@@ -32,7 +32,7 @@ Em **Environment → Add Environment Variable**, adicione:
 | Key | Value |
 |---|---|
 | `GOOGLE_SHEETS_API_KEY` | sua API Key |
-| `GOOGLE_SHEETS_ID` | `1oQjuFPA5QPtnE-_uQNQQinJV6cKjJoANuni5OBbnp00` |
+| `GOOGLE_SHEETS_ID` | `1AlGrMlol21YTP0Ztc343W5565Uq8xCuccufgY2Ns8w0` |
 | `GOOGLE_SHEETS_NAME` | `Diário Performance` |
 | `GOOGLE_SHEETS_RANGE` | `A1:Z200` |
 | `META_ACCESS_TOKEN` | *(opcional — só p/ criativos)* |

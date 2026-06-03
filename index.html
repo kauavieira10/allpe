@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard de Performance · All Pé</title>
+<title>Dashboard de Performance · All Pé · Maio/2026</title>
 
 <!-- Aplica tema ANTES de pintar (evita flash) -->
 <script>
@@ -517,8 +517,8 @@ body::after {
       <button class="qbtn" data-preset="today">Hoje</button>
       <button class="qbtn" data-preset="yesterday">Ontem</button>
       <button class="qbtn" data-preset="7d">7 dias</button>
-      <button class="qbtn active" data-preset="30d">30 dias</button>
-      <button class="qbtn" data-preset="month">Este mês</button>
+      <button class="qbtn" data-preset="30d">30 dias</button>
+      <button class="qbtn active" data-preset="month">Mês todo</button>
     </div>
     <button class="btn" id="calBtn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
@@ -526,8 +526,8 @@ body::after {
     </button>
     <div class="period-spacer"></div>
     <div class="period-status">
-      <span class="src-badge" id="srcBadge">Demo</span>
-      <span class="live-dot"></span> Ao vivo · <span class="period-range" id="periodRange">—</span>
+      <span class="src-badge" id="srcBadge">Maio/26</span>
+      <span class="live-dot"></span> <span class="period-range" id="periodRange">—</span>
     </div>
   </div>
 
@@ -647,29 +647,44 @@ body::after {
 
 <script>
 /* ════════════════════════════════════════════════════════════
-   DATA/DATASET.JS — fallback offline (30 dias realistas)
+   DATASET — dados REAIS de Maio/2026 (planilha All Pé)
+   Somados dos lançamentos diários. Serve de base e de fallback;
+   quando publicado, o app relê a planilha ao vivo.
    ════════════════════════════════════════════════════════════ */
 const TODAY = new Date();
-const DATASET = (function () {
-  const days = [];
-  const dow = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
-  const today = TODAY;
-  for (let i = 29; i >= 0; i--) {
-    const d = new Date(today); d.setDate(today.getDate() - i);
-    const weekend = (d.getDay() === 0 || d.getDay() === 6);
-    const seed = Math.sin(i * 1.7) * 0.5 + 0.5;
-    const gBudget = Math.round((weekend ? 180 : 260) + seed * 90);
-    const fBudget = Math.round((weekend ? 150 : 210) + seed * 80);
-    const gLeads = Math.max(3, Math.round(gBudget / (16 + seed * 6)));
-    const fLeads = Math.max(2, Math.round(fBudget / (19 + seed * 7)));
-    days.push({
-      date: d, day: dow[d.getDay()],
-      gBudget, fBudget, gLeads, fLeads,
-      gCpl: gBudget / gLeads, fCpl: fBudget / fLeads
-    });
-  }
-  return days;
-})();
+const DATASET = [
+  { date:new Date(2026,4,1), day:'Sex', gBudget:128.16, gLeads:15, gCpl:8.5440, fBudget:37.31, fLeads:6, fCpl:6.2183 },
+  { date:new Date(2026,4,2), day:'Sáb', gBudget:153.63, gLeads:21, gCpl:7.3157, fBudget:29.72, fLeads:10, fCpl:2.9720 },
+  { date:new Date(2026,4,3), day:'Dom', gBudget:12.41, gLeads:3, gCpl:4.1367, fBudget:42.53, fLeads:14, fCpl:3.0379 },
+  { date:new Date(2026,4,4), day:'Seg', gBudget:329.32, gLeads:24, gCpl:13.7217, fBudget:36.96, fLeads:8, fCpl:4.6200 },
+  { date:new Date(2026,4,5), day:'Ter', gBudget:242.22, gLeads:14, gCpl:17.3014, fBudget:35.42, fLeads:7, fCpl:5.0600 },
+  { date:new Date(2026,4,6), day:'Qua', gBudget:287.0, gLeads:11, gCpl:26.0909, fBudget:39.32, fLeads:11, fCpl:3.5745 },
+  { date:new Date(2026,4,7), day:'Qui', gBudget:297.52, gLeads:7, gCpl:42.5029, fBudget:33.38, fLeads:4, fCpl:8.3450 },
+  { date:new Date(2026,4,8), day:'Sex', gBudget:265.68, gLeads:16, gCpl:16.6050, fBudget:34.74, fLeads:13, fCpl:2.6723 },
+  { date:new Date(2026,4,9), day:'Sáb', gBudget:191.96, gLeads:0, gCpl:0.0, fBudget:35.55, fLeads:5, fCpl:7.1100 },
+  { date:new Date(2026,4,10), day:'Dom', gBudget:12.89, gLeads:0, gCpl:0.0, fBudget:43.83, fLeads:9, fCpl:4.8700 },
+  { date:new Date(2026,4,11), day:'Seg', gBudget:386.1, gLeads:10, gCpl:38.6100, fBudget:48.29, fLeads:8, fCpl:6.0363 },
+  { date:new Date(2026,4,12), day:'Ter', gBudget:277.75, gLeads:11, gCpl:25.2500, fBudget:37.36, fLeads:9, fCpl:4.1511 },
+  { date:new Date(2026,4,13), day:'Qua', gBudget:289.45, gLeads:13, gCpl:22.2654, fBudget:39.56, fLeads:7, fCpl:5.6514 },
+  { date:new Date(2026,4,14), day:'Qui', gBudget:215.06, gLeads:10, gCpl:21.5060, fBudget:34.2, fLeads:3, fCpl:11.4000 },
+  { date:new Date(2026,4,15), day:'Sex', gBudget:193.15, gLeads:10, gCpl:19.3150, fBudget:37.89, fLeads:3, fCpl:12.6300 },
+  { date:new Date(2026,4,16), day:'Sáb', gBudget:167.45, gLeads:3, gCpl:55.8167, fBudget:28.81, fLeads:9, fCpl:3.2011 },
+  { date:new Date(2026,4,17), day:'Dom', gBudget:16.51, gLeads:0, gCpl:0.0, fBudget:45.8, fLeads:12, fCpl:3.8167 },
+  { date:new Date(2026,4,18), day:'Seg', gBudget:160.22, gLeads:7, gCpl:22.8886, fBudget:45.92, fLeads:12, fCpl:3.8267 },
+  { date:new Date(2026,4,19), day:'Ter', gBudget:250.33, gLeads:10, gCpl:25.0330, fBudget:42.27, fLeads:9, fCpl:4.6967 },
+  { date:new Date(2026,4,20), day:'Qua', gBudget:240.84, gLeads:13, gCpl:18.5262, fBudget:39.61, fLeads:2, fCpl:19.8050 },
+  { date:new Date(2026,4,21), day:'Qui', gBudget:261.24, gLeads:20, gCpl:13.0620, fBudget:40.67, fLeads:4, fCpl:10.1675 },
+  { date:new Date(2026,4,22), day:'Sex', gBudget:267.17, gLeads:14, gCpl:19.0836, fBudget:37.2, fLeads:5, fCpl:7.4400 },
+  { date:new Date(2026,4,23), day:'Sáb', gBudget:278.29, gLeads:12, gCpl:23.1908, fBudget:32.23, fLeads:2, fCpl:16.1150 },
+  { date:new Date(2026,4,24), day:'Dom', gBudget:158.05, gLeads:4, gCpl:39.5125, fBudget:33.75, fLeads:1, fCpl:33.7500 },
+  { date:new Date(2026,4,25), day:'Seg', gBudget:14.76, gLeads:0, gCpl:0.0, fBudget:46.56, fLeads:2, fCpl:23.2800 },
+  { date:new Date(2026,4,26), day:'Ter', gBudget:319.21, gLeads:18, gCpl:17.7339, fBudget:45.64, fLeads:9, fCpl:5.0711 },
+  { date:new Date(2026,4,27), day:'Qua', gBudget:305.01, gLeads:22, gCpl:13.8641, fBudget:44.07, fLeads:7, fCpl:6.2957 },
+  { date:new Date(2026,4,28), day:'Qui', gBudget:283.33, gLeads:15, gCpl:18.8887, fBudget:35.71, fLeads:7, fCpl:5.1014 },
+  { date:new Date(2026,4,29), day:'Sex', gBudget:286.49, gLeads:22, gCpl:13.0223, fBudget:42.52, fLeads:4, fCpl:10.6300 },
+  { date:new Date(2026,4,30), day:'Sáb', gBudget:273.11, gLeads:22, gCpl:12.4141, fBudget:32.21, fLeads:2, fCpl:16.1050 },
+  { date:new Date(2026,4,31), day:'Dom', gBudget:203.77, gLeads:1, gCpl:203.7700, fBudget:24.91, fLeads:4, fCpl:6.2275 }
+];
 
 const CREATIVES = [
   { name: 'Apartamento 2 quartos · Lançamento', status: 'ACTIVE', video: false, spend: 1840, conv: 62, clicks: 3120, ctr: 2.8, impr: 111400 },
@@ -692,8 +707,12 @@ const U = {
   dmyFull: d => d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })
 };
 
-/* Metas base (proporcionais a 30 dias) */
-const GOALS_30 = { budget: 13500, leads: 580, cpl: 23 };
+/* Metas REAIS de Maio/2026 (do topo da planilha) */
+const GOALS = {
+  total:    { budget: 9500, leads: 523, cpl: 18.16 },
+  google:   { budget: 8100, leads: 470 },
+  facebook: { budget: 1400, leads: 53 }
+};
 
 /* ════════════════════════════════════════════════════════════
    APP — boot + state + cálculos
@@ -714,8 +733,9 @@ const App = (function () {
 
   function applyPreset(preset) {
     lastPreset = preset;
-    const n = { today: 1, yesterday: 1, '7d': 7, '30d': 30, month: TODAY.getDate() }[preset] || 30;
-    if (preset === 'yesterday') filtered = data.slice(-2, -1);
+    const n = { today: 1, yesterday: 1, '7d': 7, '30d': 30 }[preset] || data.length;
+    if (preset === 'month') filtered = data.slice();
+    else if (preset === 'yesterday') filtered = data.slice(-2, -1);
     else if (preset === 'today') filtered = data.slice(-1);
     else filtered = data.slice(-n);
     if (!filtered.length) filtered = data.slice();
@@ -727,8 +747,8 @@ const App = (function () {
   }
 
   function scaledGoals() {
-    const f = filtered.length / 30;
-    return { budget: GOALS_30.budget * f, leads: Math.round(GOALS_30.leads * f), cpl: GOALS_30.cpl };
+    const f = filtered.length / (data.length || 1);
+    return { budget: GOALS.total.budget * f, leads: Math.round(GOALS.total.leads * f), cpl: GOALS.total.cpl };
   }
 
   function totals() {
@@ -751,9 +771,10 @@ const App = (function () {
   }
 
   function renderPlatforms() {
-    const t = totals(), g = scaledGoals();
-    const gG = { budget: g.budget * 0.55, leads: Math.round(g.leads * 0.6) };
-    const fG = { budget: g.budget * 0.45, leads: Math.round(g.leads * 0.4) };
+    const t = totals();
+    const f = filtered.length / (data.length || 1);
+    const gG = { budget: GOALS.google.budget * f, leads: Math.round(GOALS.google.leads * f) };
+    const fG = { budget: GOALS.facebook.budget * f, leads: Math.round(GOALS.facebook.leads * f) };
     fillPlat('googleBody', t.gB, t.gL, gG);
     fillPlat('facebookBody', t.fB, t.fL, fG);
   }
@@ -774,7 +795,7 @@ const App = (function () {
   }
 
   function renderTable() {
-    const g = GOALS_30, dailyGoal = g.leads / 30;
+    const dailyGoal = GOALS.total.leads / (data.length || 1);
     document.getElementById('dailyBody').innerHTML = filtered.map(d => {
       const totalLeads = d.gLeads + d.fLeads;
       const pct = Math.round((totalLeads / dailyGoal) * 100);
@@ -838,7 +859,7 @@ const App = (function () {
 
   function renderCreatives(statusFilter) {
     statusFilter = statusFilter || 'all';
-    const f = filtered.length / 30;
+    const f = filtered.length / (data.length || 1);
     const list = CREATIVES.map(c => ({ ...c, spend: c.spend * f, conv: Math.round(c.conv * f),
       clicks: Math.round(c.clicks * f), impr: Math.round(c.impr * f) }));
     const on = list.filter(c => c.status === 'ACTIVE'), off = list.filter(c => c.status !== 'ACTIVE');
@@ -1163,8 +1184,8 @@ const Sheets = (function () {
 
 function setSource(state) {
   const b = document.getElementById('srcBadge');
-  b.className = 'src-badge' + (state === 'online' ? ' online' : state === 'offline' ? ' offline' : '');
-  b.textContent = state === 'online' ? 'Online' : state === 'offline' ? 'Offline' : 'Demo';
+  b.className = 'src-badge' + (state === 'online' ? ' online' : '');
+  b.textContent = state === 'online' ? 'Online' : 'Maio/26';
 }
 
 async function loadRealData(showFeedback) {
@@ -1176,21 +1197,21 @@ async function loadRealData(showFeedback) {
     if (showFeedback) showToast('Planilha sincronizada · ' + rows.length + ' dias');
     return true;
   } catch (e) {
-    setSource('demo');
-    console.warn('[Sheets] usando dados demo —', e.message);
-    if (showFeedback) showToast('Sem conexão com a planilha · modo demo');
+    setSource('snapshot');
+    console.warn('[Sheets] usando snapshot Maio/26 —', e.message);
+    if (showFeedback) showToast('Sem conexão com a planilha · mostrando Maio/26');
     return false;
   }
 }
 
-// Refresh agora tenta recarregar a planilha de verdade
+// Refresh tenta recarregar a planilha de verdade
 document.getElementById('refreshBtn').onclick = () => loadRealData(true);
 
 // Boot
 syncThemeIcon();
-App.applyPreset('30d');
-console.log('%c[App] Dashboard iniciado','color:#1F6FE5;font-weight:bold');
-loadRealData(false);   // tenta planilha real; se falhar, mantém demo
+App.applyPreset('month');
+console.log('%c[App] Dashboard iniciado · Maio/2026','color:#1F6FE5;font-weight:bold');
+loadRealData(false);   // tenta planilha ao vivo; se falhar, mantém o snapshot de maio
 </script>
 </body>
 </html>
